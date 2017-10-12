@@ -13,6 +13,8 @@
                 <button type="submit" name="button">Submit Form</button>
             </form>
         </fieldset>
-        <p>{{ session.names }}</p>
+        {% for i in x: %}
+            <p>{{ i }}</p>
+        {% endfor %}
     </body>
 </html>
