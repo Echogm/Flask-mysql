@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Friends</title>
+    </head>
+    <body>
+        <fieldset>
+            <legend><h1>Friends:</h1></legend>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Friends since</th>
+                </tr>
+                {% for i in friends %}
+                    <tr>
+                        <td>{{friends.name}}</td>
+                        <td>{{friends.age}}</td>
+                        <td>{{friends.createdAt}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </fieldset>
+        <br>
+        <h1>Add a Friend:</h1>
+        <br>
+        <form action="/addfriend" method="post">
+            <input type="text" name="name">
+            <input type="text" name="age">
+            <br>
+            <input type="submit" name="submit">
+        </form>
+    </body>
+</html>

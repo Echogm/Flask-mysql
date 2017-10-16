@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, session
 from mysqlconnection import MySQLConnector
 app = Flask(__name__)
-app.secret_key = "this is supper secret"
+app.secret_key = "this is super secret"
 
 db = MySQLConnector(app,"songs_artist")
 
