@@ -1,4 +1,8 @@
+# Missing:
+# 1. Display errors in registration form.
+
 from flask import Flask, session, flash, request, render_template, redirect
+import bcrypt
 from mysqlconnection import MySQLConnector
 app = Flask(__name__)
 app.secret_key = "I'm a secret :D"
@@ -15,7 +19,7 @@ def index():
 def create():
     errorcount = 0;
     querycheck = db.query("SELECT * FROM users;")
-    session["email"] = request.form(email)
+    # session["email"] = request.form(email)
 
     if request.form["first"].isalpha() != True:
         flash("First name can only be alphabetical characters")
@@ -54,12 +58,11 @@ def create():
 
     if errorcount == 0:
         query = "INSERT INTO users(first, last, email, password, createdAt, updatedAt) VALUES (:first, :last, :email, :password, NOW(), NOW());"
-
         data = {
             "first":request.form["first"],
             "last":request.form["last"],
             "email":request.form["email"],
-            "password":request.form["password"]
+            "password":bcrypt.hashpw(request.form["password"].encode(), bcrypt.gensalt())
         }
 
         db.query(query, data)
@@ -77,14 +80,23 @@ def login():
 
 @app.route("/login", methods=["POST"])
 def weloginin():
-    querycheck = db.query("SELECT * FROM users;")
+    querycheck = "SELECT * FROM users WHERE email = :email;"
+    password = request.form["password"].encode("utf8")
+    data = {
+    "email": request.form["email"]
+    }
+    results = db.query(querycheck, data)[0]
 
-    for i in querycheck:
-        if request.form["email"] == i["email"] and request.form["password"] == i["password"]:
-            errorcount += 1
-            print "Already have that enmail"
-            break
-            flash("That email address is taken")
-    return redirect ("/")
+    if bcrypt.checkpw(password, results["password"].encode()):
+        return redirect("/home")
+    else:
+        return redirect("/login")
+
+
+@app.route("/home")
+def homepage():
+    return render_template("home.html")
+
+
 
 app.run(debug=True)
