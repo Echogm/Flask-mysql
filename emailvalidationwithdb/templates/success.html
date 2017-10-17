@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Success Bitch</title>
+    </head>
+    <body>
+        <h1>Success Bitch</h1>
+        <fieldset>
+            <legend><h1>Emails</h1></legend>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Created At</th>
+                </tr>
+                {% for i in emails %}
+                    <tr>
+                        <td>{{i.email}}</td>
+                        <td>{{i.createdAt}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </fieldset>
+    </body>
+</html>

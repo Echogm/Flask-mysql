@@ -15,9 +15,9 @@
                 </tr>
                 {% for i in friends %}
                     <tr>
-                        <td>{{friends.name}}</td>
-                        <td>{{friends.age}}</td>
-                        <td>{{friends.createdAt}}</td>
+                        <td>{{i.name}}</td>
+                        <td>{{i.age}}</td>
+                        <td>{{i.createdAt}}</td>
                     </tr>
                 {% endfor %}
             </table>
@@ -26,8 +26,10 @@
         <h1>Add a Friend:</h1>
         <br>
         <form action="/addfriend" method="post">
-            <input type="text" name="name">
-            <input type="text" name="age">
+
+            <p>Name: </p><input type="text" name="name">
+
+            <p>Age:</p><input type="text" name="age">
             <br>
             <input type="submit" name="submit">
         </form>
